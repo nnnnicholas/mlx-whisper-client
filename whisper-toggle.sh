@@ -113,8 +113,10 @@ start_recording() {
   local mic
   mic="$(detect_mic)"
 
-  /opt/homebrew/bin/ffmpeg -f avfoundation -i "$mic" -ac 1 -ar 16000 -sample_fmt s16 \
-    -thread_queue_size 512 -fflags +nobuffer -y "$WAV_FILE" >>"$LOG_FILE" 2>&1 &
+  /opt/homebrew/bin/ffmpeg -f avfoundation \
+    -thread_queue_size 1024 -rtbufsize 64M \
+    -i "$mic" -ac 1 -ar 16000 -sample_fmt s16 \
+    -y "$WAV_FILE" >>"$LOG_FILE" 2>&1 &
   local pid=$!
   printf '%s' "$pid" >"$PID_FILE"
 
