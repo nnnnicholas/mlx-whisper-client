@@ -1,0 +1,5 @@
+*.log
+*.wav
+*.pid
+*.lock.d/
+.DS_Store
